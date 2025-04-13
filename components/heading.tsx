@@ -1,5 +1,5 @@
 import { JSX } from "react";
-import ContractTree from "./contract-tree";
+import { TreeRenderer } from "./tree-renderer";
 
 interface HeadingProps {
   level: string;
@@ -10,7 +10,7 @@ export default function Heading({ level, tree }: HeadingProps) {
   const Tag = `h${level}` as keyof JSX.IntrinsicElements;
   return <Tag className="">
     {tree?.map((child: any, idx: number) => (
-      <ContractTree key={idx} tree={child} index={idx} depth={child.depth + 1} />
+      <TreeRenderer node={child} key={idx} />
     ))}
   </Tag>;
 }

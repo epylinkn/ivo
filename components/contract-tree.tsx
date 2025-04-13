@@ -14,8 +14,9 @@ export default function ContractTree({ tree }: ContractTreeProps) {
     labeledNode.depth = depth;
 
     if (node.children) {
-      for (let i = 0; i < node.children.length; i++) {
-        const child = node.children[i] as Node;
+      const children = node.children as Node[];
+      for (let i = 0; i < children.length; i++) {
+        const child = children[i];
         dfs(child, i, depth + 1);
       }
     }
