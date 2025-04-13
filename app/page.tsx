@@ -49,12 +49,23 @@ const renderNode = (node: Node): JSX.Element | null => {
       return <li className="">{node.children?.map((child: any, idx: number) => renderNode(child))}</li>;
     case 'mention':
       const mentionNode = node as MentionNode;
-      return <div className="inline-block" style={{ backgroundColor: mentionNode.color }}>{mentionNode.value}</div>;
-    default: 
+      return <Mention {...mentionNode} />;
+    default:
       console.log("Unknown type: ", node.type, node)
       return null;
   }
 };
+
+function Mention({ value, color, id, title, variableType }: { value: string, color: string, id: string, title: string, variableType: string }) {
+  return <div
+    data-id={id}
+    data-title={title}
+    data-variable-type={variableType}
+    className="inline-block text-white px-2 py-1 rounded"
+    style={{ backgroundColor: color }}>
+    {value}
+  </div>;
+}
 
 function Text({ text, bold }: { text: string, bold?: boolean }) {
   const textWithBreaks = text.replace(/\n/g, "<br/>"); // FIXME
