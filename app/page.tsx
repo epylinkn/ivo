@@ -1,4 +1,5 @@
 import { JSX } from "react";
+import cn from "classnames";
 
 interface Node {
   type?: string
@@ -6,6 +7,14 @@ interface Node {
   text?: string
   bold?: boolean
   children?: Node[]
+}
+
+interface MarkNode extends Node {
+  type: 'mark'
+  text: string
+  bold?: boolean
+  underline?: boolean
+  // italicize?: boolean // Doesn't exist in input.json?
 }
 
 interface MentionNode extends Node {
@@ -19,7 +28,8 @@ interface MentionNode extends Node {
 
 const renderNode = (node: Node): JSX.Element | null => {
   if (node.text && node.type === undefined) {
-    return <Text text={node.text} bold={!!node.bold} />;
+    const markNode = node as MarkNode;
+    return <Mark {...markNode} />;
   }
 
   switch (node.type) {
@@ -67,10 +77,10 @@ function Mention({ value, color, id, title, variableType }: { value: string, col
   </div>;
 }
 
-function Text({ text, bold }: { text: string, bold?: boolean }) {
+function Mark({ text, bold, underline }: { text: string, bold?: boolean, underline?: boolean }) {
   const textWithBreaks = text.replace(/\n/g, "<br/>"); // FIXME
 
-  return <span className={bold ? "font-bold" : ""} dangerouslySetInnerHTML={{ __html: textWithBreaks }}></span>
+  return <span className={cn(bold && "font-bold", underline && "underline")} dangerouslySetInnerHTML={{ __html: textWithBreaks }} />
 }
 
 export default function Home() {
