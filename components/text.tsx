@@ -7,7 +7,7 @@ interface TextProps {
 }
 
 export default function Text({ text, bold, underline }: TextProps) {
-  const textWithBreaks = text.replace(/\n/g, "<br/>"); // FIXME ???
+  const textWithBreaks = text.replace(/\n/g, "<br/>"); // FIXME: handle leading / trailing breaks?
 
   return <span className={cn(bold && "font-bold", underline && "underline")} dangerouslySetInnerHTML={{ __html: textWithBreaks }} />
 }
