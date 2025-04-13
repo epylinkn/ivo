@@ -38,17 +38,13 @@ const renderNode = (node: Node): JSX.Element | null => {
     case 'p':
       return <div className="">{node.children?.map((child: any, idx: number) => renderNode(child))}</div>;
     case 'h1':
-      return <h1 className="">{node.children?.map((child: any, idx: number) => renderNode(child))}</h1>;
     case 'h2':
-      return <h2 className="">{node.children?.map((child: any, idx: number) => renderNode(child))}</h2>;
     case 'h3':
-      return <h3 className="">{node.children?.map((child: any, idx: number) => renderNode(child))}</h3>;
     case 'h4':
-      return <h4 className="border">{node.children?.map((child: any, idx: number) => renderNode(child))}</h4>;
     case 'h5':
-      return <h5 className="border">{node.children?.map((child: any, idx: number) => renderNode(child))}</h5>;
     case 'h6':
-      return <h6 className="border">{node.children?.map((child: any, idx: number) => renderNode(child))}</h6>;
+      const level = node.type.replace("h", "");
+      return <Heading level={level}>{node.children?.map((child: any, idx: number) => renderNode(child))}</Heading>;
     case 'clause':
       return <div className="">{node.title} {node.children?.map((child: any, idx: number) => renderNode(child))}</div>;
     case 'ul':
@@ -65,6 +61,11 @@ const renderNode = (node: Node): JSX.Element | null => {
       return null;
   }
 };
+
+function Heading({ level, children }: { level: string, children: any }) {
+  const Tag = `h${level}` as keyof JSX.IntrinsicElements;
+  return <Tag className="">{children?.map((child: any, idx: number) => renderNode(child))}</Tag>;
+}
 
 function Mention({ value, color, id, title, variableType }: { value: string, color: string, id: string, title: string, variableType: string }) {
   return <div
