@@ -26,6 +26,8 @@ interface MentionNode extends Node {
   variableType: string
 }
 
+let clauseIndex = 0
+
 const renderNode = (node: Node): JSX.Element | null => {
   if (node.text && node.type === undefined) {
     const markNode = node as MarkNode;
@@ -34,9 +36,9 @@ const renderNode = (node: Node): JSX.Element | null => {
 
   switch (node.type) {
     case 'block':
-      return <div className="">{node.children?.map((child: any, idx: number) => renderNode(child))}</div>;
+      return <div className="my-4">{node.children?.map((child: any, idx: number) => renderNode(child))}</div>;
     case 'p':
-      return <div className="">{node.children?.map((child: any, idx: number) => renderNode(child))}</div>;
+      return <div className="my-2">{node.children?.map((child: any, idx: number) => renderNode(child))}</div>;
     case 'h1':
     case 'h2':
     case 'h3':
@@ -44,9 +46,11 @@ const renderNode = (node: Node): JSX.Element | null => {
     case 'h5':
     case 'h6':
       const level = node.type.replace("h", "");
-      return <Heading level={level}>{node.children?.map((child: any, idx: number) => renderNode(child))}</Heading>;
-    case 'clause':
-      return <div className="">{node.title} {node.children?.map((child: any, idx: number) => renderNode(child))}</div>;
+      return <Heading level={level} tree={node.children} />;
+    case 'clause': {
+      clauseIndex += 1
+      return <Clause number={clauseIndex} tree={node.children} />
+    }
     case 'ul':
       return <ul className="">{node.children?.map((child: any, idx: number) => renderNode(child))}</ul>;
     case 'li':
@@ -62,9 +66,20 @@ const renderNode = (node: Node): JSX.Element | null => {
   }
 };
 
-function Heading({ level, children }: { level: string, children: any }) {
+function Clause({ number, tree }: { number: number, tree: any }) {
+  return (
+    <div className="indent-4 relative my-2">
+      <div className="absolute left-[-1rem]">{number}.</div>
+      <div className="">
+        {tree?.map((child: any, idx: number) => renderNode(child))}
+      </div>
+    </div>
+  )
+}
+
+function Heading({ level, tree }: { level: string, tree: any }) {
   const Tag = `h${level}` as keyof JSX.IntrinsicElements;
-  return <Tag className="">{children?.map((child: any, idx: number) => renderNode(child))}</Tag>;
+  return <Tag className="">{tree?.map((child: any, idx: number) => renderNode(child))}</Tag>;
 }
 
 function Mention({ value, color, id, title, variableType }: { value: string, color: string, id: string, title: string, variableType: string }) {
