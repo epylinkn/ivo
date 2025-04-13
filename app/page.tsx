@@ -15,15 +15,23 @@ const renderNode = (node: Node): JSX.Element | null => {
   }
 
   switch (node.type) {
+    case 'block':
+      console.log("TODO: Implement 'title")
+      return <div className="bg-indigo-500">{node.children?.map((child: any, idx: number) => renderNode(child))}</div>;
+    case 'p':
+      return <p className="bg-green-500">{node.children?.map((child: any, idx: number) => renderNode(child))}</p>;
     case 'h1':
       return <h1 className="border">{node.children?.map((child: any, idx: number) => renderNode(child))}</h1>;
   }
+
 
   return null
 };
 
 function Text({ text, bold }: { text: string, bold?: boolean }) {
-  return <span className={bold ? "font-bold" : ""}>{text}</span>
+  const textWithBreaks = text.replace(/\n/g, "<br/>"); // FIXME
+
+  return <span className={bold ? "font-bold" : ""} dangerouslySetInnerHTML={{ __html: textWithBreaks }}></span>
 }
 
 export default function Home() {
@@ -36,7 +44,7 @@ export default function Home() {
       </nav>
 
       <main className="text-foreground dark:text-background">
-        {renderNode(tree[0].children[0])}
+        {renderNode(tree[0])}
       </main>
 
       <footer className="flex gap-[24px] flex-wrap items-center justify-center">
