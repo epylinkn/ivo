@@ -16,23 +16,23 @@ export function TreeRenderer({
     const textNode = node as TextNode
     return <Text {...textNode} />
   }
+  
+  const renderChildren = node.children?.map((child: any, idx: number) => {
+    return <TreeRenderer key={idx} node={child} />
+  }) || null
 
   switch (node.type) {
     // block nodes
     case 'block':
       return (
         <div className='my-4'>
-          {node.children?.map((child: any, idx: number) => (
-            <TreeRenderer key={idx} node={child} />
-          ))}
+          {renderChildren}
         </div>
       )
     case 'p':
       return (
         <Paragraph text={node.text}>
-          {node.children?.map((child: any, idx: number) => (
-            <TreeRenderer key={idx} node={child} />
-          ))}
+          {renderChildren}
         </Paragraph>
       )
     case 'h1':
@@ -44,26 +44,20 @@ export function TreeRenderer({
       const level = node.type.replace('h', '')
       return (
         <Heading level={level}>
-          {node.children?.map((child: any, idx: number) => (
-            <TreeRenderer key={idx} node={child} />
-          ))}
+          {renderChildren}
         </Heading>
       )
 
     // list nodes
     case 'clause': {
       return <Clause number={1}>
-        {node.children?.map((child: any, idx: number) => (
-          <TreeRenderer key={idx} node={child} />
-        ))}
+        {renderChildren}
       </Clause>
     }
     case 'ul':
       return (
         <div className="my-2">
-          {node.children?.map((child: any, idx: number) => (
-            <TreeRenderer key={idx} node={child} />
-          ))}
+          {renderChildren}
         </div>
       )
     case 'li':
@@ -71,9 +65,7 @@ export function TreeRenderer({
         <div className='flex justify-between'>
           <li className='list-disc w-4'>{/* empty to get a disc */}</li>
           <div className='flex-1'>
-            {node.children?.map((child: any, idx: number) => (
-              <TreeRenderer key={idx} node={child} />
-            ))}
+            {renderChildren}
           </div>
         </div>
       )
@@ -82,9 +74,7 @@ export function TreeRenderer({
     case 'lic':
       return (
         <div>
-          {node.children?.map((child: any, idx: number) => (
-            <TreeRenderer key={idx} node={child} />
-          ))}
+          {renderChildren}
         </div>
       )
     case 'mention':
