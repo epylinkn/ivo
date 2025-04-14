@@ -8,7 +8,10 @@ interface TextProps {
 }
 
 export default function Text({ text, bold, underline }: TextProps) {
+
   const linebreaks = text.split('\n')
+  console.log("text", text)
+  console.log('linebreaks', linebreaks)
 
   return (
     <span className={cn(bold && 'font-bold', underline && 'underline')}>
@@ -17,7 +20,11 @@ export default function Text({ text, bold, underline }: TextProps) {
           {line === '' ? (
             <br className="my-2" />
           ) : (
-            <span dangerouslySetInnerHTML={{ __html: line }} />
+            <>
+              {/* Add a linebreak if this is not the first line */}
+              {idx > 0 && <br className="my-2" />}
+              <span dangerouslySetInnerHTML={{ __html: line }} />
+            </>
           )}
         </React.Fragment>
       ))}
