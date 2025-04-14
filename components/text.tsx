@@ -7,7 +7,7 @@ interface TextProps {
   underline?: boolean
 }
 
-export default function Text({ text, bold, underline }: TextProps) {
+export default function Text({ text, bold = false, underline = false }: TextProps) {
 
   const linebreaks = text.split('\n')
   console.log("text", text)
