@@ -4,6 +4,7 @@ export interface Node {
   text?: string;
   bold?: boolean;
   children?: Node[];
+  label?: string; // clause label
 }
 
 export interface LabeledNode extends Node {

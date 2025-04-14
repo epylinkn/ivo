@@ -9,7 +9,7 @@ import Paragraph from './paragraph'
 export function TreeRenderer({
   node,
 }: {
-  node: Node
+  node: Node,
 }): JSX.Element | null {
   // is a terminal text node
   if (node.type === undefined) {
@@ -17,7 +17,7 @@ export function TreeRenderer({
     return <Text {...textNode} />
   }
   
-  const renderChildren = node.children?.map((child: any, idx: number) => {
+  const renderChildren = node.children?.map((child: Node, idx: number) => {
     return <TreeRenderer key={idx} node={child} />
   }) || null
 
@@ -50,7 +50,7 @@ export function TreeRenderer({
 
     // list nodes
     case 'clause': {
-      return <Clause number={1}>
+      return <Clause label={node.label!}>
         {renderChildren}
       </Clause>
     }

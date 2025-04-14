@@ -1,12 +1,12 @@
 interface ClauseProps {
-  number: number;
   children: React.ReactNode
+  label: string
 }
 
-export default function Clause({ number, children }: ClauseProps) {
+export default function Clause({ label, children }: ClauseProps) {
   return (
-    <div className="relative my-2 ml-4">
-      <div className="absolute left-[-1rem]">{number}.</div>
+    <div className="relative my-2 ml-8">
+      <div className="absolute left-[-1.5rem]">{label}</div>
       <div className="">
         {children}
       </div>
