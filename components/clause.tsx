@@ -1,18 +1,14 @@
-import { TreeRenderer } from "./tree-renderer";
-
 interface ClauseProps {
   number: number;
-  tree: any;
+  children: React.ReactNode
 }
 
-export default function Clause({ number, tree }: ClauseProps) {
+export default function Clause({ number, children }: ClauseProps) {
   return (
     <div className="relative my-2">
       <div className="absolute left-[-1rem]">{number}.</div>
       <div className="">
-        {tree?.map((child: any, idx: number) => (
-          <TreeRenderer node={child} />
-        ))}
+        {children}
       </div>
     </div>
   )

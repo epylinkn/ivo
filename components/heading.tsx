@@ -1,16 +1,11 @@
-import { JSX } from "react";
-import { TreeRenderer } from "./tree-renderer";
+import { JSX } from 'react'
 
 interface HeadingProps {
-  level: string;
-  tree: any;
+  level: string
+  children: React.ReactNode
 }
 
-export default function Heading({ level, tree }: HeadingProps) {
-  const Tag = `h${level}` as keyof JSX.IntrinsicElements;
-  return <Tag className="">
-    {tree?.map((child: any, idx: number) => (
-      <TreeRenderer node={child} key={idx} />
-    ))}
-  </Tag>;
+export default function Heading({ level, children }: HeadingProps) {
+  const Tag = `h${level}` as keyof JSX.IntrinsicElements
+  return <Tag>{children}</Tag>
 }
