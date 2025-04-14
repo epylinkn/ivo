@@ -1,3 +1,5 @@
+'use client'
+
 interface MentionProps {
   value: string;
   color: string;
@@ -8,13 +10,16 @@ interface MentionProps {
 
 export default function Mention({ value, color, id, title, variableType }: MentionProps) {
   return (
-    <div
+    <span
       data-id={id}
       data-title={title}
       data-variable-type={variableType}
+      onClick={() => {
+        alert('TODO: change color')
+      }}
       className="inline-block text-white px-2 py-1 rounded"
       style={{ backgroundColor: color }}>
       {value}
-    </div>
+    </span>
   );
 }
