@@ -42,8 +42,8 @@ export function TreeRenderer({ node }: { node: LabeledNode }): JSX.Element | nul
     case 'ul':
       return <div key={key}>{node.children?.map((child: any) => TreeRenderer({ node: child }))}</div>;
     case 'li':
-      return <div key={key} className="flex">
-        <li className="list-disc flex-shrink-0">{/* empty to get a disc */}</li>
+      return <div key={key} className="flex justify-between">
+        <li className="list-disc w-4">{/* empty to get a disc */}</li>
         <div className="flex-1">
           {node.children?.map((child: any) => TreeRenderer({ node: child }))}
         </div>
