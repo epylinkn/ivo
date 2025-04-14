@@ -8,10 +8,7 @@ interface TextProps {
 }
 
 export default function Text({ text, bold = false, underline = false }: TextProps) {
-
   const linebreaks = text.split('\n')
-  console.log("text", text)
-  console.log('linebreaks', linebreaks)
 
   return (
     <span className={cn(bold && 'font-bold', underline && 'underline')}>
